@@ -1,4 +1,8 @@
 # Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
 trigger:
 - main
 
@@ -6,24 +10,10 @@ pool:
   vmImage: window-latest
 
 steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
 
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      $tokenUrl = "https://login.microsoftonline.com/common/oauth2/token"
-      $tokenBody = @ {
-      grant_type = "password"
-      client_id = "$(CLIENTID)"
-      client_secret = "$(CLIENTSECRET)"
-      resource = "https://lcsapi.lcs.dynamics.com"
-      username = "$(USERNAME)"
-      password = "$(PASSWORD)"
-      }
-      $tokenResponse = Invoke - RestMethod - Method 'POST' - Uri $tokenUrl -Body $tokenBody
-      $token = $tokenResponse .access_token
-      Write-Host $token
-      Write-Host "##vso[task.setvariable variable=TOKENOUT;isOutput=true]$token"
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
